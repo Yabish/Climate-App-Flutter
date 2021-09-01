@@ -1,5 +1,8 @@
 import 'package:clima/services/location_service.dart';
+import 'package:clima/services/network_service.dart';
 import 'package:flutter/material.dart';
+
+const apiKey = 'ce9fb687add6d80a823548eefceb4f09';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);
@@ -26,6 +29,17 @@ class _LoadingScreenState extends State<LoadingScreen> {
       lat = location.latitude;
       lng = location.longitude;
     });
+
+    bool isEnable = await location.isLocationEnabled();
+
+    print('isEnable:::::::::: $isEnable');
+
+    NetworkHelper networkHelper = NetworkHelper(
+      'http://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lng&appid=$apiKey',
+    );
+
+    var weatherData = await networkHelper.getData();
+    // print(weatherData);
   }
 
   @override
@@ -40,6 +54,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
           ),
           Center(
             child: Text('Longitude: $lng'),
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            child: const Text('Get'),
           ),
         ],
       ),

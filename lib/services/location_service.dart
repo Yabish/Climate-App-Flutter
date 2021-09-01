@@ -15,4 +15,8 @@ class Location {
       print(e);
     }
   }
+
+  Future<bool> isLocationEnabled() async {
+    return Geolocator.isLocationServiceEnabled();
+  }
 }
