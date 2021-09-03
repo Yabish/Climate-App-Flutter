@@ -52,6 +52,11 @@ class _LocationScreenState extends State<LocationScreen> {
     _updateUI(weatherData);
   }
 
+  void _getCityWeatherData(cityName) async {
+    dynamic weatherData = await weather.getCityWeather(cityName);
+    _updateUI(weatherData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,15 +91,19 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      dynamic cityName = await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return CityScreen();
+                            return const CityScreen();
                           },
                         ),
                       );
+                      if (cityName != null || cityName == '') {
+                        print(cityName);
+                        _getCityWeatherData(cityName);
+                      }
                     },
                     child: const Icon(
                       Icons.location_city,

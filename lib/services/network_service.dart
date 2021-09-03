@@ -16,6 +16,7 @@ class NetworkHelper {
       return jsonDecode(data);
     } else {
       return jsonDecode('source');
+      // TODO: HANDLE ERROR DATA
     }
   }
 }
