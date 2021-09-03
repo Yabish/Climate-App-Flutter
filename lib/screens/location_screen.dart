@@ -38,7 +38,6 @@ class _LocationScreenState extends State<LocationScreen> {
         cityName = '';
         return;
       }
-      print('-----------$weatherData');
       dynamic temp = weatherData['main']['temp'];
       int condition = weatherData['weather'][0]['id'];
       weatherIcon = weather.getWeatherIcon(condition);
