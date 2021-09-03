@@ -15,8 +15,7 @@ class NetworkHelper {
       String data = response.body;
       return jsonDecode(data);
     } else {
-      return jsonDecode('source');
-      // TODO: HANDLE ERROR DATA
+      return null;
     }
   }
 }

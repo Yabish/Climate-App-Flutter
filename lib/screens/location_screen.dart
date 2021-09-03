@@ -38,7 +38,8 @@ class _LocationScreenState extends State<LocationScreen> {
         cityName = '';
         return;
       }
-      double temp = weatherData['main']['temp'];
+      print('-----------$weatherData');
+      dynamic temp = weatherData['main']['temp'];
       int condition = weatherData['weather'][0]['id'];
       weatherIcon = weather.getWeatherIcon(condition);
       temperature = temp.toInt();
@@ -101,7 +102,6 @@ class _LocationScreenState extends State<LocationScreen> {
                         ),
                       );
                       if (cityName != null || cityName == '') {
-                        print(cityName);
                         _getCityWeatherData(cityName);
                       }
                     },

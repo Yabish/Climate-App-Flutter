@@ -12,11 +12,7 @@ class Location {
       latitude = position.latitude;
       longitude = position.longitude;
     } catch (e) {
-      // print(e);
+      // empty
     }
-  }
-
-  Future<bool> isLocationEnabled() async {
-    return Geolocator.isLocationServiceEnabled();
   }
 }
