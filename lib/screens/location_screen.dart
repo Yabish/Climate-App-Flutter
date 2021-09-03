@@ -1,3 +1,4 @@
+import 'package:clima/screens/city_screen.dart';
 import 'package:clima/services/weather.dart';
 import 'package:clima/utilities/constants.dart';
 import 'package:flutter/material.dart';
@@ -25,20 +26,30 @@ class _LocationScreenState extends State<LocationScreen> {
   void initState() {
     super.initState();
 
-    updateUI(widget.locationWeather);
+    _updateUI(widget.locationWeather);
   }
 
-  void updateUI(dynamic weatherData) {
-    double temp = weatherData['main']['temp'];
-
-    int condition = weatherData['weather'][0]['id'];
-
+  void _updateUI(dynamic weatherData) {
     setState(() {
+      if (weatherData == null) {
+        temperature = 0;
+        weatherIcon = 'Error';
+        message = 'Unable to get weather Data';
+        cityName = '';
+        return;
+      }
+      double temp = weatherData['main']['temp'];
+      int condition = weatherData['weather'][0]['id'];
       weatherIcon = weather.getWeatherIcon(condition);
       temperature = temp.toInt();
       message = weather.getMessage(temperature);
       cityName = weatherData['name'];
     });
+  }
+
+  void _getCurrentLocationWeather() async {
+    dynamic weatherData = await weather.getWeatherData();
+    _updateUI(weatherData);
   }
 
   @override
@@ -65,7 +76,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _getCurrentLocationWeather();
+                    },
                     child: const Icon(
                       Icons.near_me,
                       size: 50,
@@ -73,7 +86,16 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return CityScreen();
+                          },
+                        ),
+                      );
+                    },
                     child: const Icon(
                       Icons.location_city,
                       size: 50,
