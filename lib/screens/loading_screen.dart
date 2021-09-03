@@ -36,14 +36,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
       'http://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lng&appid=$apiKey',
     );
 
-    var weatherData = await networkHelper.getData();
-    print(weatherData);
+    dynamic weatherData = await networkHelper.getData();
+    print('----- $weatherData');
 
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) {
-          return const LocationScreen();
+          return LocationScreen(
+            locationWeather: weatherData,
+          );
         },
       ),
     );
@@ -51,7 +53,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: SpinKitDoubleBounce(
           color: Colors.white,
