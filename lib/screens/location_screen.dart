@@ -21,6 +21,7 @@ class _LocationScreenState extends State<LocationScreen> {
   String weatherIcon = '';
   String message = '';
   String cityName = '';
+  String messageCity = '';
 
   @override
   void initState() {
@@ -36,6 +37,7 @@ class _LocationScreenState extends State<LocationScreen> {
         weatherIcon = 'Error';
         message = 'Unable to get weather Data';
         cityName = '';
+        messageCity = message;
         return;
       }
       dynamic temp = weatherData['main']['temp'];
@@ -44,6 +46,7 @@ class _LocationScreenState extends State<LocationScreen> {
       temperature = temp.toInt();
       message = weather.getMessage(temperature);
       cityName = weatherData['name'];
+      messageCity = message + ' in ' + cityName;
     });
   }
 
@@ -71,7 +74,7 @@ class _LocationScreenState extends State<LocationScreen> {
             ),
           ),
         ),
-        constraints: const BoxConstraints.expand(),
+        // constraints: const BoxConstraints.expand(),
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,7 +133,7 @@ class _LocationScreenState extends State<LocationScreen> {
               Padding(
                 padding: const EdgeInsets.only(right: 15),
                 child: Text(
-                  '$message in $cityName!',
+                  messageCity,
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),
